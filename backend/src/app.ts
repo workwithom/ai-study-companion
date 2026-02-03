@@ -2,7 +2,7 @@ import express from "express";
 import cors from "cors";
 import authRoutes from "./routes/auth.routes.js";
 import cookieParser from "cookie-parser";
-
+import aiRoutes from "./routes/ai.routes.js";
 
 
 const app = express();
@@ -15,6 +15,7 @@ app.use(
 );
 
 app.use(express.json());
+app.use("/api/ai", aiRoutes);
 
 app.use("/api/auth", authRoutes);
 
