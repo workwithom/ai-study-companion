@@ -60,3 +60,15 @@ export const deleteSession = async (id: string) => {
 
   return res.json();
 };
+
+export const fetchAiQuota = async () => {
+  const res = await fetch("http://localhost:5000/api/ai/quota", {
+    credentials: "include",
+  });
+
+  if (!res.ok) {
+    throw new Error("Failed to fetch quota");
+  }
+
+  return res.json();
+};

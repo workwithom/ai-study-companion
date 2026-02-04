@@ -1,4 +1,5 @@
 import mongoose, { Schema, Document } from "mongoose";
+import { PROMPT_MODES } from "../config/constants.js";
 
 export interface IStudySession extends Document {
   userId: mongoose.Types.ObjectId;
@@ -16,10 +17,10 @@ const StudySessionSchema = new Schema<IStudySession>(
       required: true,
     },
     mode: {
-      type: String,
-      enum: ["summary", "explain", "questions"],
-      required: true,
-    },
+  type: String,
+  enum: PROMPT_MODES,
+  required: true,
+},
     content: {
       type: String,
       required: true,

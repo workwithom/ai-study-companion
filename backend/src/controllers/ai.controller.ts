@@ -1,6 +1,7 @@
 import { Request, Response } from "express";
-import { buildPrompt, askLLM } from "../services/ai.service.js";
+import { askLLM } from "../services/ai.service.js";
 import StudySession from "../models/StudySession.js";
+import AiUsage from "../models/AiUsage.js";
 
 export const askAI = async (req: Request, res: Response) => {
   const { mode, content } = req.body;
@@ -11,8 +12,8 @@ export const askAI = async (req: Request, res: Response) => {
   }
 
   try {
-    const prompt = buildPrompt(mode, content);
-    const answer = await askLLM(prompt);
+    const answer = await askLLM(mode, content);
+
 
     // ✅ Save to DB
     const session = await StudySession.create({
@@ -72,4 +73,24 @@ export const deleteSession = async (req: Request, res: Response) => {
   }
 
   res.json({ message: "Session deleted successfully" });
+};
+
+
+
+export const getAiQuota = async (req: Request, res: Response) => {
+  const userId = (req as any).userId;
+  const today = new Date().toISOString().slice(0, 10);
+
+  const DAILY_LIMIT = 10;
+
+  const usage = await AiUsage.findOne({ userId, date: today });
+
+  const used = usage ? usage.count : 0;
+  const remaining = Math.max(DAILY_LIMIT - used, 0);
+
+  res.json({
+    limit: DAILY_LIMIT,
+    used,
+    remaining,
+  });
 };

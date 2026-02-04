@@ -1,32 +1,17 @@
 import { llm } from "../config/llm.js";
-import { GROQ_MODEL } from "../config/models.js"; 
+import { buildPrompt, PromptMode } from "./prompt.builder.js";
 
-export const askLLM = async (prompt: string) => {
+export const askLLM = async (
+  mode: PromptMode,
+  content: string
+) => {
+  const prompt = buildPrompt(mode, content);
+
   const response = await llm.chat.completions.create({
-    model: GROQ_MODEL, // ✅ WORKING GROQ MODEL
+    model: "llama-3.3-70b-versatile",
     messages: [{ role: "user", content: prompt }],
-    temperature: 0.7,
+    temperature: 0.5,
   });
 
   return response.choices[0].message.content;
 };
-
-
-export const buildPrompt = (
-  mode: "summary" | "explain" | "questions",
-  content: string
-) => {
-  switch (mode) {
-    case "summary":
-      return `Summarize the following content in clear bullet points:\n\n${content}`;
-
-    case "explain":
-      return `Explain the following content in simple terms as if teaching a beginner:\n\n${content}`;
-
-    case "questions":
-      return `Generate 5 important exam-style questions from the following content:\n\n${content}`;
-
-    default:
-      return content;
-  }
-}; 
