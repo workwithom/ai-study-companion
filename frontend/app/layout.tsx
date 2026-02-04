@@ -1,16 +1,16 @@
+import "./globals.css";
 import type { Metadata } from "next";
 import { Inter } from "next/font/google";
-import "./globals.css";
+import Navbar from "@/components/Navbar";
 
 const inter = Inter({
-  variable: "--font-inter",
   subsets: ["latin"],
+  variable: "--font-inter",
 });
 
 export const metadata: Metadata = {
   title: "AI Study Companion",
-  description:
-    "Master any subject with AI-powered study assistance. Clear explanations, focused practice, and thoughtful guidance.",
+  description: "Minimal AI-powered study platform",
 };
 
 export default function RootLayout({
@@ -20,7 +20,16 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en">
-      <body className={`${inter.variable} font-sans antialiased`}>
+      <body className={`${inter.variable} font-sans bg-black text-white`}>
+        {/* Spline background */}
+        <div className="fixed inset-0 -z-10">
+          <iframe
+            src="https://my.spline.design/thresholddarkambientui-v0gkZCfi6zXm69kE0wccy70f/"
+            className="w-full h-full"
+          />
+        </div>
+
+        <Navbar />
         {children}
       </body>
     </html>
