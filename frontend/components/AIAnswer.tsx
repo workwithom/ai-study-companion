@@ -6,7 +6,7 @@ export default function AIAnswer({ text }: Props) {
   const lines = text.split("\n");
 
   return (
-    <div className="space-y-3 text-gray-800 dark:text-gray-200">
+    <div className="space-y-3 text-gray-300">
       {lines.map((line, i) => {
         const trimmed = line.trim();
 
@@ -19,7 +19,7 @@ export default function AIAnswer({ text }: Props) {
           return (
             <h3
               key={i}
-              className="mt-4 font-semibold text-lg text-black dark:text-white"
+              className="mt-4 font-semibold text-lg text-white text-glow"
             >
               {trimmed.replace(/\*\*/g, "").replace(/##/g, "")}
             </h3>
@@ -29,7 +29,7 @@ export default function AIAnswer({ text }: Props) {
         // Bullet points
         if (trimmed.startsWith("-") || trimmed.startsWith("•")) {
           return (
-            <li key={i} className="ml-5 list-disc">
+            <li key={i} className="ml-5 list-disc text-gray-300">
               {trimmed.replace(/^[-•]\s*/, "")}
             </li>
           );
@@ -42,7 +42,7 @@ export default function AIAnswer({ text }: Props) {
 
         // Normal paragraph
         return (
-          <p key={i} className="leading-relaxed">
+          <p key={i} className="leading-relaxed text-gray-300">
             {trimmed}
           </p>
         );
