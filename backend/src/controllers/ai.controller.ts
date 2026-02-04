@@ -24,19 +24,12 @@ export const askAI = async (req: Request, res: Response) => {
     });
 
     res.json({
-  success: true,
-  data: {
-    answer,
-    sessionId: session._id,
-  },
-});
-
+      answer,
+      sessionId: session._id,
+    });
   } catch (err: any) {
     console.error("AI ERROR:", err?.message || err);
-    res.status(400).json({
-  success: false,
-  message: "Invalid request",
-});
+    res.status(500).json({ message: "AI request failed" });
   }
 };
 
