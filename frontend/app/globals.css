@@ -1,6 +1,8 @@
+@tailwind base;
+@tailwind components;
 @tailwind utilities;
 
-/* App theme variables */
+/* Your theme variables */
 :root {
   --background: #ffffff;
   --foreground: #171717;
