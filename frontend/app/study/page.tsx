@@ -11,11 +11,26 @@ export default function StudyPage() {
   const [answer, setAnswer] = useState("");
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState("");
+  
   const [quota, setQuota] = useState<{
     limit: number;
     used: number;
     remaining: number;
   } | null>(null);
+
+  const isQuotaExhausted = quota ? quota.remaining === 0 : false;
+
+  let quotaClass = "bg-green-100 text-green-700";
+
+  if (quota) {
+    if (quota.remaining === 0) {
+      quotaClass = "bg-red-100 text-red-700";
+    } else if (quota.remaining <= 3) {
+      quotaClass = "bg-yellow-100 text-yellow-800";
+    }
+  }
+
+
 
   //Fetch quota on page load.
   useEffect(() => {
@@ -79,10 +94,26 @@ export default function StudyPage() {
 
         {/* Quota */}
         {quota && (
-          <p className="text-sm text-zinc-500">
-            🔋 AI quota: {quota.remaining} / {quota.limit} requests left today
-          </p>
-        )}
+          <div
+            className={`inline-block text-sm px-3 py-1 rounded-full font-medium ${quotaClass}`}
+          >
+          🔋 {quota.remaining} / {quota.limit} AI requests left today
+          </div>
+)}
+
+{quota && quota.remaining <= 3 && quota.remaining > 0 && (
+  <p className="text-sm text-yellow-700">
+    ⚠️ You’re running low on AI requests today.
+  </p>
+)}
+
+{quota && quota.remaining === 0 && (
+  <p className="text-sm text-red-600">
+    🚫 Daily AI quota exhausted. Try again tomorrow.
+  </p>
+)}
+
+
 
         {/* Mode Selector */}
         <div className="flex gap-3 items-center">
@@ -112,8 +143,14 @@ export default function StudyPage() {
         {/* Ask Button */}
         <button
           onClick={askAI}
-          disabled={loading}
-          className="bg-black text-white px-6 py-2 rounded hover:bg-zinc-800 disabled:opacity-50"
+          disabled={loading || isQuotaExhausted}
+          className={`px-6 py-2 rounded text-white
+          ${
+          loading || isQuotaExhausted
+          ? "bg-gray-400 cursor-not-allowed"
+          : "bg-black hover:bg-zinc-800"
+        }
+      `}
         >
           {loading ? "Thinking..." : "Ask AI"}
         </button>
