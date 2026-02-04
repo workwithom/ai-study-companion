@@ -41,3 +41,35 @@ export const getMySessions = async (req: Request, res: Response) => {
 
   res.json(sessions);
 };
+
+export const getSessionById = async (req: Request, res: Response) => {
+  const userId = (req as any).userId;
+  const { id } = req.params;
+
+  const session = await StudySession.findOne({
+    _id: id,
+    userId,
+  });
+
+  if (!session) {
+    return res.status(404).json({ message: "Session not found" });
+  }
+
+  res.json(session);
+};
+
+export const deleteSession = async (req: Request, res: Response) => {
+  const userId = (req as any).userId;
+  const { id } = req.params;
+
+  const session = await StudySession.findOneAndDelete({
+    _id: id,
+    userId,
+  });
+
+  if (!session) {
+    return res.status(404).json({ message: "Session not found" });
+  }
+
+  res.json({ message: "Session deleted successfully" });
+};
