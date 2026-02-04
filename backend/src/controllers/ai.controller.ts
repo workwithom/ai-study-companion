@@ -2,6 +2,7 @@ import { Request, Response } from "express";
 import { askLLM } from "../services/ai.service.js";
 import StudySession from "../models/StudySession.js";
 import AiUsage from "../models/AiUsage.js";
+import  { DAILY_AI_LIMIT } from "../config/constants.js";
 
 export const askAI = async (req: Request, res: Response) => {
   const { mode, content } = req.body;
@@ -81,8 +82,7 @@ export const getAiQuota = async (req: Request, res: Response) => {
   const userId = (req as any).userId;
   const today = new Date().toISOString().slice(0, 10);
 
-  const DAILY_LIMIT = 10;
-
+  const DAILY_LIMIT = DAILY_AI_LIMIT;
   const usage = await AiUsage.findOne({ userId, date: today });
 
   const used = usage ? usage.count : 0;

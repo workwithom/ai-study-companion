@@ -2,6 +2,8 @@
 
 import { useEffect, useState } from "react";
 import { fetchAiQuota } from "@/lib/api";
+import AIAnswer from "@/components/AIAnswer";
+
 
 export default function StudyPage() {
   const [mode, setMode] = useState("explain");
@@ -123,13 +125,12 @@ export default function StudyPage() {
 
         {/* AI Answer */}
         {answer && (
-          <div className="border rounded p-4 bg-white dark:bg-zinc-900">
-            <h2 className="font-semibold mb-2">🤖 AI Answer</h2>
-            <p className="whitespace-pre-wrap text-gray-800 dark:text-gray-200">
-              {answer}
-            </p>
+          <div className="border rounded p-5 bg-white dark:bg-zinc-900">
+            <h2 className="font-semibold mb-3 text-lg">🤖 AI Answer</h2>
+            <AIAnswer text={answer} />
           </div>
         )}
+
 
       </div>
     </div>

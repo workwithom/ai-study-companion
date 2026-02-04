@@ -1,8 +1,8 @@
 import { Request, Response, NextFunction } from "express";
 import AiUsage from "../models/AiUsage.js";
+import  { DAILY_AI_LIMIT } from "../config/constants.js";
 
-
-const DAILY_LIMIT = 10; // 🔧 change anytime
+const DAILY_LIMIT = DAILY_AI_LIMIT;
 
 export const aiRateLimit = async (
   req: Request,
