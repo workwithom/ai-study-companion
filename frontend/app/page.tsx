@@ -1,130 +1,36 @@
-"use client";
+import Link from "next/link";
 
-import { useState } from "react";
-import { fetchAiQuota } from "@/lib/api";
-import { useEffect } from "react";
-
-export default function Home() {
-  const [mode, setMode] = useState("explain");
-  const [content, setContent] = useState("");
-  const [answer, setAnswer] = useState("");
-  const [loading, setLoading] = useState(false);
-  const [error, setError] = useState("");
-
-  const [quota, setQuota] = useState<{
-  limit: number;
-  used: number;
-  remaining: number;
-} | null>(null);
-  useEffect(() => {
-  fetchAiQuota()
-    .then(setQuota)
-    .catch(() => {});
-}, []);
-
-
-  const askAI = async () => {
-    if (!content.trim()) {
-      setError("Please enter some content");
-      return;
-    }
-
-    setLoading(true);
-    setError("");
-    setAnswer("");
-
-    try {
-      const res = await fetch("http://localhost:5000/api/ai/ask", {
-        method: "POST",
-        credentials: "include",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({
-          mode,
-          content,
-        }),
-      });
-
-      if (!res.ok) {
-        throw new Error("AI request failed");
-      }
-
-      const data = await res.json();
-      setAnswer(data.answer);
-      fetchAiQuota().then(setQuota);
-
-    } catch (err) {
-      setError("Failed to get AI response");
-    } finally {
-      setLoading(false);
-    }
-  };
-
+export default function HomePage() {
   return (
-    <div className="min-h-screen bg-zinc-50 dark:bg-black flex justify-center px-4">
-      <div className="w-full max-w-3xl py-16 space-y-6">
-
-        <h1 className="text-3xl font-bold text-black dark:text-white">
+    <main className="max-w-4xl mx-auto px-6 py-20">
+      <section className="space-y-6">
+        <h1 className="text-4xl font-bold text-black dark:text-white">
           AI Study Companion
         </h1>
 
-        {quota && (
-          <p className="text-sm text-zinc-500">
-              🔋 AI quota: {quota.remaining} / {quota.limit} requests left today
-          </p>
-        )}
+        <p className="text-lg text-gray-600 dark:text-gray-300 max-w-2xl">
+          An AI-powered study assistant that helps you understand topics,
+          prepare for exams, revise efficiently, and practice interview-ready
+          answers — all in one place.
+        </p>
 
-        {/* Mode Selector */}
-        <div className="flex gap-3 items-center">
-          <label className="text-sm font-medium">Mode:</label>
-          <select
-            value={mode}
-            onChange={(e) => setMode(e.target.value)}
-            className="border rounded px-3 py-2 dark:bg-black dark:text-white"
+        <ul className="list-disc pl-6 text-gray-600 dark:text-gray-300 space-y-1">
+          <li>Explain complex topics in simple terms</li>
+          <li>Generate exam-oriented answers</li>
+          <li>Create quick revision notes</li>
+          <li>Prepare interview questions & answers</li>
+          <li>Save and revisit your study sessions</li>
+        </ul>
+
+        <div className="pt-6">
+          <Link
+            href="/study"
+            className="inline-block bg-black text-white px-6 py-3 rounded hover:bg-zinc-800 transition"
           >
-            <option value="explain">Explain</option>
-            <option value="summary">Summary</option>
-            <option value="exam">Exam</option>
-            <option value="revision">Revision</option>
-            <option value="interview">Interview</option>
-          </select>
+            🚀 Start Studying
+          </Link>
         </div>
-
-        {/* Input */}
-        <textarea
-          value={content}
-          onChange={(e) => setContent(e.target.value)}
-          placeholder="Enter topic or content to study..."
-          rows={6}
-          className="w-full border rounded p-3 dark:bg-black dark:text-white"
-        />
-
-        {/* Button */}
-        <button
-          onClick={askAI}
-          disabled={loading}
-          className="bg-black text-white px-6 py-2 rounded hover:bg-zinc-800 disabled:opacity-50"
-        >
-          {loading ? "Thinking..." : "Ask AI"}
-        </button>
-
-        {/* Error */}
-        {error && (
-          <p className="text-red-500 text-sm">{error}</p>
-        )}
-
-        {/* AI Answer */}
-        {answer && (
-          <div className="border rounded p-4 bg-white dark:bg-zinc-900">
-            <h2 className="font-semibold mb-2">🤖 AI Answer</h2>
-            <p className="whitespace-pre-wrap text-gray-800 dark:text-gray-200">
-              {answer}
-            </p>
-          </div>
-        )}
-
-      </div>
-    </div>
+      </section>
+    </main>
   );
 }
