@@ -2,6 +2,7 @@
 
 import { useEffect, useState } from "react";
 
+
 const features = [
   {
     icon: (
@@ -69,10 +70,10 @@ export default function HomePage() {
   }, []);
 
   return (
+
+    
     <main className="relative min-h-screen overflow-x-hidden">
       {/* Decorative glow orbs */}
-      <div className="fixed top-1/4 left-10 w-64 h-64 bg-white/[0.02] blur-[100px] rounded-full pointer-events-none" />
-      <div className="fixed bottom-1/4 right-10 w-80 h-80 bg-white/[0.02] blur-[120px] rounded-full pointer-events-none" />
 
       {/* Hero Section - Content on sides, center clear for Spline */}
       <section className="relative min-h-screen flex items-center justify-center px-6 pt-24">

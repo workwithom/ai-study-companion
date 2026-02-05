@@ -2,6 +2,9 @@ import "./globals.css";
 import type { Metadata } from "next";
 import { Inter } from "next/font/google";
 import Navbar from "@/components/Navbar";
+import SmoothScroll from "@/components/SmoothScroll";
+import ElasticScroll from "@/components/ElasticScroll";
+import UnicornBg from "@/components/UnicornBg";
 
 const inter = Inter({
   subsets: ["latin"],
@@ -21,16 +24,18 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body className={`${inter.variable} font-sans bg-black text-white`}>
-        {/* Spline background */}
-        <div className="fixed inset-0 -z-10">
-          <iframe
-            src="https://my.spline.design/thresholddarkambientui-v0gkZCfi6zXm69kE0wccy70f/"
-            className="w-full h-full"
-          />
-        </div>
+        <div
+        className="w-full h-full fixed inset-0 -z-10 overflow-hidden">
+        <UnicornBg /></div>
+      
 
-        <Navbar />
-        {children}
+        {/* Smooth scrolling wrapper */}
+        <SmoothScroll>
+  <ElasticScroll>
+    <Navbar />
+    {children}
+  </ElasticScroll>
+</SmoothScroll>
       </body>
     </html>
   );

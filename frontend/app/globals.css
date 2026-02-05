@@ -235,6 +235,7 @@ body {
 html,
 body {
   cursor: url("/cursor.svg") 16 16, auto;
+  overscroll-behavior-y: auto;
 }
 a,
 button,
