@@ -1,11 +1,12 @@
-const API_BASE = "http://localhost:5000";
+const API_BASE =
+  process.env.NEXT_PUBLIC_API_URL || "http://localhost:5000";
 
 export const api = async (
   path: string,
   options: RequestInit = {}
 ) => {
   const res = await fetch(`${API_BASE}${path}`, {
-    credentials: "include", //for cookies
+    credentials: "include", // 🔑 cookies
     headers: {
       "Content-Type": "application/json",
       ...(options.headers || {}),
@@ -21,54 +22,24 @@ export const api = async (
   return res.json();
 };
 
+// ---------- AI Sessions ----------
+
 export const fetchSessions = async () => {
-  const res = await fetch("http://localhost:5000/api/ai/sessions", {
-    credentials: "include",
-  });
-
-  if (!res.ok) {
-    throw new Error("Failed to fetch sessions");
-  }
-
-  return res.json();
+  return api("/api/ai/sessions");
 };
 
 export const fetchSessionById = async (id: string) => {
-  const res = await fetch(`http://localhost:5000/api/ai/sessions/${id}`, {
-    credentials: "include",
-  });
-
-  if (!res.ok) {
-    throw new Error("Failed to fetch session");
-  }
-
-  return res.json();
+  return api(`/api/ai/sessions/${id}`);
 };
 
 export const deleteSession = async (id: string) => {
-  const res = await fetch(
-    `http://localhost:5000/api/ai/sessions/${id}`,
-    {
-      method: "DELETE",
-      credentials: "include",
-    }
-  );
-
-  if (!res.ok) {
-    throw new Error("Failed to delete session");
-  }
-
-  return res.json();
+  return api(`/api/ai/sessions/${id}`, {
+    method: "DELETE",
+  });
 };
 
+// ---------- AI Quota ----------
+
 export const fetchAiQuota = async () => {
-  const res = await fetch("http://localhost:5000/api/ai/quota", {
-    credentials: "include",
-  });
-
-  if (!res.ok) {
-    throw new Error("Failed to fetch quota");
-  }
-
-  return res.json();
+  return api("/api/ai/quota");
 };
