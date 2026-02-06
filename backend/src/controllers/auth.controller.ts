@@ -33,9 +33,10 @@ export const register = async (req: Request, res: Response) => {
 
 res.cookie("token", token, {
   httpOnly: true,
-  sameSite: "strict",
-  secure: false, // set true in production (HTTPS)
+  secure: true,          // REQUIRED
+  sameSite: "none",      // REQUIRED (cross-site)
 });
+
 
 res.status(201).json({
   id: user._id,
