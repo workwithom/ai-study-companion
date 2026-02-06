@@ -119,17 +119,17 @@ export default function StudyPage() {
             <div className="flex items-center justify-between mb-3">
               <div className="flex items-center gap-3">
                 <div className={`w-10 h-10 rounded-xl flex items-center justify-center ${
-                  quota.remaining === 0 
-                    ? "bg-red-500/20" 
-                    : quota.remaining <= 3 
-                      ? "bg-yellow-500/20" 
+                  quota.remaining === 0
+                    ? "bg-red-500/20"
+                    : quota.remaining <= 3
+                      ? "bg-yellow-500/20"
                       : "bg-white/10 glow-white"
                 }`}>
                   <svg className={`w-5 h-5 ${
-                    quota.remaining === 0 
-                      ? "text-red-400" 
-                      : quota.remaining <= 3 
-                        ? "text-yellow-400" 
+                    quota.remaining === 0
+                      ? "text-red-400"
+                      : quota.remaining <= 3
+                        ? "text-yellow-400"
                         : "text-white"
                   }`} fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M13 10V3L4 14h7v7l9-11h-7z" />
@@ -150,10 +150,10 @@ export default function StudyPage() {
             <div className="h-2 bg-white/10 rounded-full overflow-hidden">
               <div
                 className={`h-full rounded-full transition-all duration-500 ${
-                  quota.remaining === 0 
-                    ? "bg-red-500" 
-                    : quota.remaining <= 3 
-                      ? "bg-yellow-500" 
+                  quota.remaining === 0
+                    ? "bg-red-500"
+                    : quota.remaining <= 3
+                      ? "bg-yellow-500"
                       : "bg-white glow-white"
                 }`}
                 style={{ width: `${100 - quotaPercentage}%` }}
