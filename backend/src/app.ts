@@ -11,9 +11,10 @@ const app = express();
 app.use(cookieParser());
 app.use(
   cors({
-    origin: "https://ai-study-amber.vercel.app/",
-    credentials: true,
-  })
+  origin: "https://ai-study-amber.vercel.app",
+  credentials: true,
+})
+
 );
 
 app.use(express.json());
