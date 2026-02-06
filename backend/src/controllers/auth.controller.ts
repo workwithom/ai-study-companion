@@ -35,6 +35,7 @@ res.cookie("token", token, {
   httpOnly: true,
   secure: true,          // REQUIRED
   sameSite: "none",      // REQUIRED (cross-site)
+  path: "/",  
 });
 
 
