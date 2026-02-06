@@ -1,30 +1,17 @@
 import express from "express";
 import cors from "cors";
-import authRoutes from "./routes/auth.routes.js";
 import cookieParser from "cookie-parser";
+
+import authRoutes from "./routes/auth.routes.js";
 import aiRoutes from "./routes/ai.routes.js";
 import healthRoutes from "./routes/health.routes.js";
 
-
-
 const app = express();
+
+/* 1️⃣ Trust proxy (Render / HTTPS cookies) */
 app.set("trust proxy", 1);
-app.use(cookieParser());
-app.use(
-  cors({
-  origin: "https://ai-study-amber.vercel.app",
-  credentials: true,
-})
 
-);
-
-app.use(express.json());
-app.use("/api/ai", aiRoutes);
-
-app.use("/api/auth", authRoutes);
-
-app.get("/health", healthRoutes);
-
+/* 2️⃣ CORS — ONLY ONCE */
 const allowedOrigins = [
   "http://localhost:3000",
   "https://ai-study-amber.vercel.app",
@@ -42,4 +29,14 @@ app.use(
     credentials: true,
   })
 );
+
+/* 3️⃣ Parsers */
+app.use(express.json());
+app.use(cookieParser());
+
+/* 4️⃣ Routes */
+app.use("/api/auth", authRoutes);
+app.use("/api/ai", aiRoutes);
+app.use("/health", healthRoutes);
+
 export default app;
